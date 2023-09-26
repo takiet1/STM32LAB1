@@ -34,8 +34,8 @@
 /* USER CODE BEGIN PD */
 #define LED_ON 1
 #define LED_OFF 0
-#define TIME_ON 2000
-#define TIME_OFF 2000
+#define TIME_ON 200
+#define TIME_OFF 200
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
