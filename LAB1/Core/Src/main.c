@@ -108,30 +108,29 @@ int main(void)
 	  			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 1);
 	  			if (timer1_flag == 1) {
 	  				led_st = LED_GREEN_ON;
-	  				setTimer2(TIME_GREEN);
+	  				setTimer1(TIME_GREEN);
 	  			}
 	  			break;
 	  		case LED_GREEN_ON:
 	  			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 1);
 	  			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 1);
 	  			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
-	  			if (timer2_flag == 1) {
+	  			if (timer1_flag == 1) {
 	  				led_st = LED_YELLOW_ON;
-	  				setTimer3(TIME_YELLOW);
+	  				setTimer1(TIME_YELLOW);
 	  			}
 	  			break;
 	  		default:
 	  			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 1);
 	  			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
 	  			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 1);
-	  			if (timer3_flag == 1) {
+	  			if (timer1_flag == 1) {
 	  				led_st = LED_RED_ON;
 	  				setTimer1(TIME_RED);
 	  			}
 	  		}
 	  		timer1Run();
-	  		timer2Run();
-	  		timer3Run();
+
 	  		HAL_Delay(10);
     /* USER CODE END WHILE */
 
