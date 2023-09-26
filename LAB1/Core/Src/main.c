@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "software_timer.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -32,6 +32,10 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define LED_ON 1
+#define LED_OFF 0
+#define TIME_ON 2000
+#define TIME_OFF 2000
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -72,7 +76,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+  unsigned short led_st = 0;
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -91,8 +95,28 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  switch(led_st) {
+	  case LED_ON:
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 1);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
+		  if (timer1_flag == 1) {
+			  led_st = LED_OFF;
+			  setTimer1(TIME_OFF);
+		  }
+		  break;
+	  default:
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 0);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 1);
+		  if (timer1_flag == 1) {
+			  led_st = LED_ON;
+		 	  setTimer1(TIME_ON);
+		 		  }
+		  timerRun();
+		   HAL_Delay(10);
+	  }
+
     /* USER CODE END WHILE */
-	  //TODO Ex1
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
