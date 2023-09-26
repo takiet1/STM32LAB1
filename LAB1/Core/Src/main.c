@@ -32,6 +32,12 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define LED_RED_ON 0
+#define LED_GREEN_ON 1
+#define LED_YELLOW_ON 2
+#define TIME_RED 500 //5s
+#define TIME_GREEN 300 //3s
+#define TIME_YELLOW 200 //2s
 
 /* USER CODE END PD */
 
@@ -74,6 +80,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
+  unsigned short led_st = 0;
 
   /* USER CODE END Init */
 
@@ -81,7 +88,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  setTimer1(TIME_RED);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -94,6 +101,38 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  switch (led_st) {
+	  		case LED_RED_ON:
+	  			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 0);
+	  			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 1);
+	  			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 1);
+	  			if (timer1_flag == 1) {
+	  				led_st = LED_GREEN_ON;
+	  				setTimer2(TIME_GREEN);
+	  			}
+	  			break;
+	  		case LED_GREEN_ON:
+	  			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 1);
+	  			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 1);
+	  			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 0);
+	  			if (timer2_flag == 1) {
+	  				led_st = LED_YELLOW_ON;
+	  				setTimer3(TIME_YELLOW);
+	  			}
+	  			break;
+	  		default:
+	  			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, 1);
+	  			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, 0);
+	  			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, 1);
+	  			if (timer3_flag == 1) {
+	  				led_st = LED_RED_ON;
+	  				setTimer1(TIME_RED);
+	  			}
+	  		}
+	  		timer1Run();
+	  		timer2Run();
+	  		timer3Run();
+	  		HAL_Delay(10);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
